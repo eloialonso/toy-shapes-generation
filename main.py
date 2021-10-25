@@ -8,15 +8,12 @@ from tqdm import tqdm
 
 def main():
     args = parse_args()   
-    can_overlap = False
-    can_go_out = False
-    can_rotate = False
 
     im_size = (256, 256)
     min_size = 0.1 * min(im_size)
     max_size = 0.3 * min(im_size)
-    min_pos = 0 if can_go_out else max_size
-    max_pos = min(im_size) if can_go_out else min(im_size) - max_size
+    min_pos = 0 if args.can_go_out else max_size
+    max_pos = min(im_size) if args.can_go_out else min(im_size) - max_size
 
     for i in tqdm(range(args.nb_images)):
         fig, ax = plt.subplots()
@@ -28,10 +25,10 @@ def main():
         np.random.shuffle(colors)
         np.random.shuffle(shapes)
         
-        positions, sizes = sample_n_pos_size(3, min_pos, max_pos, min_size, max_size, can_overlap)
+        positions, sizes = sample_n_pos_size(3, min_pos, max_pos, min_size, max_size, args.can_overlap)
 
         for c, s, pos, size in zip(colors, shapes, positions, sizes):
-            angle = np.random.rand() * 2 * np.pi if can_rotate else 0
+            angle = np.random.rand() * 2 * np.pi if args.can_rotate else 0
             if s == "square":
                 shape = make_square(pos, size, angle, c)
             if s == "circle":
@@ -47,6 +44,9 @@ def main():
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--nb-images", type=int, default=10, help="Number of images to generate.")
+    parser.add_argument("-o", "--can-overlap", action="store_true", help="Shapes can overlap.")
+    parser.add_argument("-g", "--can-go-out", action="store_true", help="Shapes can go out of the image.")
+    parser.add_argument("-r", "--can-rotate", action="store_true", help="Shapes can rotate.")
     return parser.parse_args()
 
 
