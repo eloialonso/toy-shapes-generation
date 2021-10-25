@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,7 +9,7 @@ from tqdm import tqdm
 
 def main():
     args = parse_args()   
-
+    args.output_dir.mkdir(exist_ok=True)
     im_size = (args.size, args.size)
     min_size = 0.1 * min(im_size)
     max_size = 0.3 * min(im_size)
@@ -40,7 +41,7 @@ def main():
             ax.add_patch(shape)
 
         plt.tight_layout()
-        plt.savefig(f"images/image_{i:0{len(str(args.nb_images))}d}.png", bbox_inches="tight", pad_inches=0, dpi=1)
+        plt.savefig(args.output_dir / f"image_{i:0{len(str(args.nb_images))}d}.png", bbox_inches="tight", pad_inches=0, dpi=1)
         plt.close()
 
 
@@ -48,6 +49,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--size", type=int, default=64, help="Size of image.")
     parser.add_argument("-n", "--nb-images", type=int, default=10, help="Number of images to generate.")
+    parser.add_argument("--output-dir", type=Path, default=Path("images"), help="Output directory.")
     parser.add_argument("-o", "--can-overlap", action="store_true", help="Shapes can overlap.")
     parser.add_argument("-g", "--can-go-out", action="store_true", help="Shapes can go out of the image.")
     parser.add_argument("-r", "--can-rotate", action="store_true", help="Shapes can rotate.")
