@@ -1,17 +1,18 @@
-import yaml
 from pathlib import Path
+from typing import List
 
 import hydra
 import matplotlib.pyplot as plt
 import numpy as np
+import yaml
 
 
 class Layout:
-    def __init__(self, image_size) -> None:
+    def __init__(self, image_size: int) -> None:
         self.image_size = image_size
         self.shapes = []
     
-    def add(self, target, position, size, angle, color) -> None:
+    def add(self, target: str, position: List[int], size: int, angle: int, color: str) -> None:
         shape = {
             "_target_": target,
             "position": position,
