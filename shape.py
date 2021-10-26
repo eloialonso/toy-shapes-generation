@@ -1,9 +1,11 @@
+from typing import List
+
 import matplotlib.patches as patches
 import numpy as np
 
 
 class Shape:
-    def __init__(self, position: list[float], size: float, angle: float, color: str) -> None:
+    def __init__(self, position: List[float], size: float, angle: float, color: str) -> None:
         self.position = np.array(position)
         self.size = size
         self.angle = angle * np.pi / 180

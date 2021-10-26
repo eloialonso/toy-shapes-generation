@@ -1,4 +1,5 @@
 from functools import partial
+from typing import List
 
 import numpy as np
 from numpy.random.mtrand import choice
@@ -7,7 +8,7 @@ from layout import Layout
 
 
 class SimpleGenerator:
-    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: list[float] = None) -> None:
+    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: List[float] = None) -> None:
         self.image_size = [size, size]
         self.can_overlap = can_overlap
         self.can_rotate = can_rotate
