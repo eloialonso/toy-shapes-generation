@@ -1,7 +1,7 @@
 nb_images: 10
 output_dir: "/home/eloi/workspace/sandbox/toy-shapes-generation/images"
 generator:
-  _target_: generator.SimpleGenerator
+  _target_: generator.Generator
   size: 256
   can_overlap: False
   can_go_out: False
