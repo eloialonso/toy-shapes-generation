@@ -15,6 +15,7 @@ class SimpleGenerator:
         self.can_go_out = can_go_out
         self.pick_shape_once = pick_shape_once
         
+        # Size
         if possible_relative_sizes is None:
             assert min_relative_size is not None and max_relative_size is not None
             assert 0 <= min_relative_size <= 1 and min_relative_size <= max_relative_size <= 1
@@ -27,10 +28,16 @@ class SimpleGenerator:
             self.possible_sizes = [int(size * min(self.image_size)) for size in possible_relative_sizes]
             max_size = max(self.possible_sizes)
         
-        min_pos = 0 if can_go_out else max_size
-        max_pos = min(self.image_size) if can_go_out else min(self.image_size) - max_size
+        # Position
+        if can_go_out:
+            min_pos = 0
+            max_pos = min(self.image_size)
+        else:
+            min_pos = max_size
+            max_pos = min(self.image_size) - max_size
         self.possible_positions = [[x, y] for x in np.arange(min_pos, max_pos) for y in np.arange(min_pos, max_pos)]
 
+        # Angles
         if possible_angles is not None:
             assert can_rotate
             self.possible_angles = possible_angles
@@ -45,23 +52,12 @@ class SimpleGenerator:
         shapes = np.random.choice(possible_shapes, 3, replace=not self.pick_shape_once).tolist()
 
         positions, sizes, angles = sample_shapes_in_choices(3, self.possible_positions, self.possible_sizes, self.possible_angles, self.can_overlap)
-        # angles = (np.random.randint(0, 360, 3) if self.can_rotate else np.zeros(3, dtype=int)).tolist()
         
         layout = Layout(self.image_size)
         for shape, position, size, angle, color in zip(shapes, positions, sizes, angles, colors):
             layout.add(shape, position, size, angle, color)   
         
         return layout
-
-
-# def sample_shapes_in_range(n, min_pos, max_pos, min_size, max_size, can_overlap):
-#     if can_overlap:
-#         positions = np.random.randint(min_pos, max_pos, (n, 2))
-#         sizes = np.random.randint(min_size, max_size, n)
-#         return positions.tolist(), sizes.tolist()
-    
-#     sampler = partial(sample_shapes_in_range, min_pos=min_pos, max_pos=max_pos, min_size=min_size, max_size=max_size, can_overlap=True)
-#     return sample_shapes_with_no_overlap(n, sampler)
 
 
 def sample_shapes_in_choices(n, possible_positions, possible_sizes, possible_angles, can_overlap):
