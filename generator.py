@@ -8,11 +8,12 @@ from layout import Layout
 
 
 class SimpleGenerator:
-    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: List[float] = None, possible_angles: List[int] = None) -> None:
+    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, pick_shape_once: bool, min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: List[float] = None, possible_angles: List[int] = None) -> None:
         self.image_size = [size, size]
         self.can_overlap = can_overlap
         self.can_rotate = can_rotate
-        self.can_go_out = can_go_out 
+        self.can_go_out = can_go_out
+        self.pick_shape_once = pick_shape_once
         
         if possible_relative_sizes is None:
             assert min_relative_size is not None and max_relative_size is not None
@@ -38,10 +39,11 @@ class SimpleGenerator:
 
     def generate_random_layout(self):
         colors = ["red", "green", "blue"]
-        shapes = ["shape.Square", "shape.Circle", "shape.Triangle"]
+        possible_shapes = ["shape.Square", "shape.Circle", "shape.Triangle"]
         np.random.shuffle(colors)
-        np.random.shuffle(shapes)
         
+        shapes = np.random.choice(possible_shapes, 3, replace=not self.pick_shape_once).tolist()
+
         positions, sizes, angles = sample_shapes_in_choices(3, self.possible_positions, self.possible_sizes, self.possible_angles, self.can_overlap)
         # angles = (np.random.randint(0, 360, 3) if self.can_rotate else np.zeros(3, dtype=int)).tolist()
         
