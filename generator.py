@@ -8,7 +8,7 @@ from layout import Layout
 
 
 class SimpleGenerator:
-    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: List[float] = None) -> None:
+    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: List[float] = None, possible_angles: List[int] = None) -> None:
         self.image_size = [size, size]
         self.can_overlap = can_overlap
         self.can_rotate = can_rotate
@@ -30,7 +30,11 @@ class SimpleGenerator:
         max_pos = min(self.image_size) if can_go_out else min(self.image_size) - max_size
         self.possible_positions = [[x, y] for x in np.arange(min_pos, max_pos) for y in np.arange(min_pos, max_pos)]
 
-        self.possible_angles = list(range(360)) if can_rotate else [0] 
+        if possible_angles is not None:
+            assert can_rotate
+            self.possible_angles = possible_angles
+        else:
+            self.possible_angles = list(range(360)) if can_rotate else [0]
 
     def generate_random_layout(self):
         colors = ["red", "green", "blue"]

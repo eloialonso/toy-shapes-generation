@@ -9,3 +9,4 @@ generator:
   min_relative_size: null
   max_relative_size: null
   possible_relative_sizes: [0.05, 0.1, 0.15]
+  possible_angles: [45, 90]
