@@ -6,6 +6,7 @@ generator:
   can_overlap: False
   can_go_out: False
   can_rotate: True
+  pick_color_once: False
   pick_shape_once: True
   min_relative_size: null
   max_relative_size: null
