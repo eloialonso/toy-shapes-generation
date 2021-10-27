@@ -1,5 +1,7 @@
 nb_images: 1000
-output_dir: "/home/eloi/workspace/sandbox/toy-shapes-generation/images"
+output_dir: ${oc.env:HOME}/workspace/data/toy-shapes-generation/${now:%Y-%m-%d}/${now:%H-%M-%S}
+png_dir: ${output_dir}/png
+yaml_dir: ${output_dir}/yaml
 workers: 5
 generator:
   _target_: generator.Generator
