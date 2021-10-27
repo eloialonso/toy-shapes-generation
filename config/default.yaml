@@ -1,5 +1,6 @@
-nb_images: 10
+nb_images: 1000
 output_dir: "/home/eloi/workspace/sandbox/toy-shapes-generation/images"
+workers: 5
 generator:
   _target_: generator.Generator
   size: 256

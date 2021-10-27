@@ -7,7 +7,8 @@ from layout import Layout
 
 
 class Generator:
-    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, pick_color_once: bool, pick_shape_once: bool, min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: List[float] = None, possible_angles: List[int] = None) -> None:
+    def __init__(self, size: int, can_overlap: bool, can_rotate: bool, can_go_out: bool, pick_color_once: bool, pick_shape_once: bool,
+        min_relative_size: float = None, max_relative_size: float = None, possible_relative_sizes: List[float] = None, possible_angles: List[int] = None) -> None:
         self.image_size = [size, size]
         self.can_overlap = can_overlap
         self.can_rotate = can_rotate
