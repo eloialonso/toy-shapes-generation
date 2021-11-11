@@ -1,16 +1,16 @@
-nb_images: 1000
+nb_images: 100000
 output_dir: ${oc.env:HOME}/workspace/data/toy-shapes-generation/${now:%Y-%m-%d}/${now:%H-%M-%S}
 png_dir: ${output_dir}/png
 yaml_dir: ${output_dir}/yaml
-workers: 5
+workers: 24
 generator:
   _target_: generator.Generator
-  size: 256
+  size: 64
   can_overlap: False
   can_go_out: False
   can_rotate: True
   pick_color_once: False
-  pick_shape_once: True
+  pick_shape_once: False
   min_relative_size: null
   max_relative_size: null
   possible_relative_sizes: [0.05, 0.1, 0.15]
